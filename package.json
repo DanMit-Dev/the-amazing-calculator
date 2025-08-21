@@ -1,0 +1,25 @@
+{
+  "name": "the-amazing-calculator",
+  "version": "1.0.0",
+  "description": "Offline, advanced calculator with 1º, 2º, 3º degree solvers and Rule of Three",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "webpack --mode production",
+    "dist:linux": "electron-builder --linux",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac"
+  },
+  "author": "Daniel Mitsuo / DanMit",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^25.0.0",
+    "typescript": "^5.2.0",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.0"
+  },
+  "dependencies": {
+    "mathjs": "^11.9.0"
+  }
+}
