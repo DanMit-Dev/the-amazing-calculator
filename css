@@ -1,0 +1,21 @@
+the-amazing-calculator/
+├─ assets/
+│  ├─ icon.png       # App icon (replace with your own)
+│  ├─ icon.icns      # macOS icon
+│  └─ icon.ico       # Windows icon
+├─ dist/                  # Will be created after build
+├─ src/
+│  ├─ main.ts
+│  ├─ renderer.ts
+│  ├─ math.ts
+│  └─ index.html
+├─ .github/
+│  └─ workflows/
+│      └─ build.yml
+├─ .gitignore
+├─ package.json
+├─ tsconfig.json
+├─ webpack.config.js
+├─ README.md
+├─ LICENSE.md
+└─ SECURITY.md
