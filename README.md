@@ -68,3 +68,11 @@ Dependencies audited (uses mathjs only).
 ## **📜 License**
 MIT License — see LICENSE.md.
 You are free to use, modify, and distribute.
+
+## **❤️ Contributing**
+
+PRs welcome. Fork → Branch → Commit → PR.
+Please give your feedback, suggestions, ideas, or code solutions/innovations.
+
+## **📖Thanks by Reading**
+Feel free to connect with DanMit-Dev (🔎The Amazing Calculator Creator🔍)
