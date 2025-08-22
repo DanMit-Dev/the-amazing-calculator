@@ -1,26 +1,53 @@
+package.json
 {
   "name": "the-amazing-calculator",
   "version": "1.0.0",
-  "description": "Offline advanced calculator with 1º, 2º, 3º degree solvers, Rule of Three, dark/light mode",
+  "description": "Offline advanced calculator: arithmetic, 1º/2º/3º degree solvers, Rule of Three, dark/light mode.",
   "main": "dist/main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "webpack --mode production",
-    "dist:linux": "electron-builder --linux",
-    "dist:win": "electron-builder --win",
-    "dist:mac": "electron-builder --mac"
-  },
-  "author": "Your Name",
+  "author": "Your Name <you@example.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode production",
+    "start": "electron .",
+    "package": "electron-builder",
+    "dist:linux": "electron-builder --linux",
+    "dist:win": "electron-builder --win nsis",
+    "dist:mac": "electron-builder --mac dmg"
+  },
   "devDependencies": {
     "electron": "^27.0.0",
     "electron-builder": "^25.0.0",
+    "ts-loader": "^9.4.5",
     "typescript": "^5.2.0",
     "webpack": "^5.85.0",
-    "webpack-cli": "^5.1.0",
-    "ts-loader": "^9.4.5"
+    "webpack-cli": "^5.1.0"
   },
   "dependencies": {
     "mathjs": "^11.9.0"
+  },
+  "build": {
+    "appId": "com.theamazing.calculator",
+    "productName": "The Amazing Calculator",
+    "files": [
+      "dist/**/*",
+      "index.html",
+      "assets/**"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": ["dmg"],
+      "icon": "assets/icon.icns"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "rpm"],
+      "icon": "assets/icon.png"
+    }
   }
 }
