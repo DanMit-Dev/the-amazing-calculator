@@ -1,10 +1,9 @@
-
 name: Build & Release
 
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*1*0*'
 
 jobs:
   release:
@@ -49,3 +48,4 @@ jobs:
             dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
