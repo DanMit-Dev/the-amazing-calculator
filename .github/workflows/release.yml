@@ -3,7 +3,7 @@ name: Build & Release
 on:
   push:
     tags:
-      - 'v*1*0*'
+      - 'v1.0.0.08.25'
 
 jobs:
   release:
