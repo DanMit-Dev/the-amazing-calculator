@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>The Amazing Calculator</title>
 <style>
-:root{--bg:#f3f3f3;--text:#222;--btn:#e0e0e0;--hover:#d0d0d0;--special:#6c63ff;--special-hover:#574fd6;}
-[data-theme="dark"]{--bg:#1e1e1e;--text:#f3f3f3;--btn:#333;--hover:#444;--special:#8e83ff;--special-hover:#6c63ff;}
-body{font-family:Arial,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0;height:100vh;background:var(--bg);color:var(--text);transition:0.3s;}
-#display{width:90%;font-size:2em;margin-bottom:10px;text-align:right;padding:10px;border-radius:8px;border:1px solid #aaa;background:#fff;}
-.buttons,.special-buttons{display:grid;gap:5px;width:90%;margin-bottom:10px;}
-.buttons{grid-template-columns:repeat(4,1fr);}
-.special-buttons{grid-template-columns:repeat(2,1fr);}
-button{font-size:1.5em;padding:15px;border:none;border-radius:8px;background:var(--btn);cursor:pointer;transition:0.1s;}
-button:hover{background:var(--hover);transform:scale(1.05);}
-.special-buttons button{background:var(--special);color:#fff;}
-.special-buttons button:hover{background:var(--special-hover);}
+:root{--bg:#f3f3f3;--text:#222;--btn:#e0e0e0;--hover:#d0d0d0;--special:#6c63ff;--special-hover:#574fd6}
+[data-theme="dark"]{--bg:#1e1e1e;--text:#f3f3f3;--btn:#333;--hover:#444;--special:#8e83ff;--special-hover:#6c63ff}
+body{font-family:Arial,system-ui,Segoe UI,Roboto;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0;height:100vh;background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+#display{width:90%;max-width:540px;font-size:2rem;margin-bottom:12px;text-align:right;padding:12px;border-radius:10px;border:1px solid #aaa;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.buttons,.special-buttons{display:grid;gap:8px;width:90%;max-width:540px;margin-bottom:10px}
+.buttons{grid-template-columns:repeat(4,1fr)}
+.special-buttons{grid-template-columns:repeat(2,1fr)}
+button{font-size:1.125rem;padding:12px;border:none;border-radius:10px;background:var(--btn);cursor:pointer;transition:transform .08s,background .15s;box-shadow:0 3px 8px rgba(0,0,0,.05)}
+button:active{transform:scale(.98)}
+button:hover{background:var(--hover)}
+.special-buttons button{background:var(--special);color:#fff}
+.special-buttons button:hover{background:var(--special-hover)}
+.toolbar{display:flex;gap:8px;margin-top:8px}
 </style>
 </head>
 <body data-theme="light">
-<input type="text" id="display" readonly>
+<input id="display" type="text" readonly />
+
 <div class="buttons">
-<button data-value="7">7</button><button data-value="8">8</button><button data-value="9">9</button><button data-value="/">÷</button>
-<button data-value="4">4</button><button data-value="5">5</button><button data-value="6">6</button><button data-value="*">×</button>
-<button data-value="1">1</button><button data-value="2">2</button><button data-value="3">3</button><button data-value="-">−</button>
-<button data-value="0">0</button><button data-value=".">.</button><button data-value="=">=</button><button data-value="+">+</button>
-<button data-value="C" style="grid-column: span 4;">Clear</button>
+  <button data-value="7">7</button><button data-value="8">8</button><button data-value="9">9</button><button data-value="/">÷</button>
+  <button data-value="4">4</button><button data-value="5">5</button><button data-value="6">6</button><button data-value="*">×</button>
+  <button data-value="1">1</button><button data-value="2">2</button><button data-value="3">3</button><button data-value="-">−</button>
+  <button data-value="0">0</button><button data-value=".">.</button><button data-value="=">=</button><button data-value="+">+</button>
+  <button data-value="C" style="grid-column: span 4;">Clear</button>
 </div>
+
 <div class="special-buttons">
-<button id="linear-btn">1º degree</button>
-<button id="quadratic-btn">2º degree</button>
-<button id="cubic-btn">3º degree</button>
-<button id="rule3-btn">Rule of Three</button>
+  <button id="linear-btn">1º degree</button>
+  <button id="quadratic-btn">2º degree</button>
+  <button id="cubic-btn">3º degree</button>
+  <button id="rule3-btn">Rule of Three</button>
 </div>
-<button id="theme-toggle" style="margin-top:10px;padding:8px 16px;">Toggle Dark/Light</button>
-<script src="renderer.js"></script>
+
+<div class="toolbar">
+  <button id="theme-toggle">Toggle Dark/Light</button>
+</div>
+
+<script src="dist/renderer.js"></script>
 </body>
 </html>
 
