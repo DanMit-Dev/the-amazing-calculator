@@ -1,21 +1,28 @@
+
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
+import * as url from 'url';
 
-let mainWindow: BrowserWindow;
+let win: BrowserWindow | null = null;
 
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+function createWindow() {
+  win = new BrowserWindow({
+    width: 420,
+    height: 640,
+    resizable: true,
     webPreferences: {
-      preload: path.join(__dirname, 'renderer.js')
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true
     }
   });
-  mainWindow.loadFile('index.html');
-};
+
+  const indexPath = url.pathToFileURL(path.join(app.getAppPath(), 'index.html')).toString();
+  win.loadURL(indexPath);
+  win.setMenu(null);
+  win.on('closed', () => { win = null; });
+}
 
 app.whenReady().then(createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
+app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
