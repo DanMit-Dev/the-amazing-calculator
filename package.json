@@ -1,7 +1,7 @@
 
 {
   "name": "the-amazing-calculator",
-  "version": "v1.0.1.08.25",
+  "version": "v1.0.0",
   "description": "The best offline open-source calculator app in the world.",
   "main": "dist/main.js",
   "author": "Daniel Mitsuo / DanMit",
