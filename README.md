@@ -36,12 +36,12 @@ npm install
 *Run in Dev Mode*
 npm start
 
-##🛠 Build for Distribution
+## **🛠 Build for Distribution**
 Build cross-platform executables (Linux, Windows, macOS):
 npm run build
 Output files will be placed inside dist/.
 
-##📦 CI/CD with GitHub Actions
+## **📦 CI/CD with GitHub Actions**
 Every push to main triggers a GitHub Actions workflow (.github/workflows/release.yml) that:
 
 Installs dependencies
@@ -55,7 +55,7 @@ Attaches installers to the GitHub Release page
 You can download the installers directly from Releases.
 End-users never need npm start — they just install and run.
 
-##🔒 Security
+## **🔒 Security**
 See SECURITY.md.
 Key points:
 
@@ -65,6 +65,6 @@ Offline by design.
 
 Dependencies audited (uses mathjs only).
 
-##📜 License
+## **📜 License**
 MIT License — see LICENSE.md.
 You are free to use, modify, and distribute.
