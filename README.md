@@ -1,13 +1,13 @@
 # The Amazing Calculator
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/YOUR_GITHUB_USERNAME/the-amazing-calculator)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/YOUR_GITHUB_USERNAME/the-amazing-calculator/release.yml)
-![GitHub repo size](https://img.shields.io/github/repo-size/YOUR_GITHUB_USERNAME/the-amazing-calculator)
-![License](https://img.shields.io/github/license/YOUR_GITHUB_USERNAME/the-amazing-calculator)
-![GitHub issues](https://img.shields.io/github/issues/YOUR_GITHUB_USERNAME/the-amazing-calculator)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/YOUR_GITHUB_USERNAME/the-amazing-calculator)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/DanMit-Dev/the-amazing-calculator)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/DanMit-Dev/the-amazing-calculator/release.yml)
+![GitHub repo size](https://img.shields.io/github/repo-size/DanMit-Dev/the-amazing-calculator)
+![License](https://img.shields.io/github/license/DanMit-Dev/the-amazing-calculator)
+![GitHub issues](https://img.shields.io/github/issues/DanMit-Dev/the-amazing-calculator)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/DanMit-Dev/the-amazing-calculator)
 ![Platform](https://img.shields.io/badge/platform-linux%20|%20win%20|%20mac-lightgrey)
-![Downloads](https://img.shields.io/github/downloads/YOUR_GITHUB_USERNAME/the-amazing-calculator/total)
+![Downloads](https://img.shields.io/github/downloads/DanMit-Dev/the-amazing-calculator/total)
 
 **The best offline, open-source calculator app in the world.**  
 Built with **Electron + TypeScript + Webpack**, featuring:
