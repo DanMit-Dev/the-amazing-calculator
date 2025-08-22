@@ -1,58 +1,77 @@
-import { evaluateExpression, solveLinear, solveQuadratic, solveCubic, ruleOfThree } from "./math";
+import { evaluateExpression, solveLinear, solveQuadratic, solveCubic, ruleOfThree } from './math';
 
-window.addEventListener("DOMContentLoaded",()=>{
-  const display = document.getElementById("display") as HTMLInputElement;
-  const buttons = document.querySelectorAll("button[data-value]");
-  const linearBtn = document.getElementById("linear-btn")!;
-  const quadBtn = document.getElementById("quadratic-btn")!;
-  const cubicBtn = document.getElementById("cubic-btn")!;
-  const rule3Btn = document.getElementById("rule3-btn")!;
-  const themeToggle = document.getElementById("theme-toggle")!;
+function safeParse(n: string | null): number {
+  const v = parseFloat(n ?? 'NaN');
+  if (Number.isNaN(v) || !Number.isFinite(v)) throw new Error('Invalid number');
+  return v;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const display = document.getElementById('display') as HTMLInputElement;
+  const buttons = document.querySelectorAll('button[data-value]');
+  const linearBtn = document.getElementById('linear-btn')!;
+  const quadBtn = document.getElementById('quadratic-btn')!;
+  const cubicBtn = document.getElementById('cubic-btn')!;
+  const rule3Btn = document.getElementById('rule3-btn')!;
+  const themeToggle = document.getElementById('theme-toggle')!;
   const body = document.body;
 
-  buttons.forEach(btn=>btn.addEventListener("click",()=>{
-    const val = (btn as HTMLButtonElement).dataset.value!;
-    if(val==="C") display.value="";
-    else if(val==="=") display.value=evaluateExpression(display.value);
-    else display.value+=val;
-  }));
+  const setOutput = (t: string) => { display.value = t; };
 
-  window.addEventListener("keydown",(e)=>{
-    if(/[\d+\-*/.=]/.test(e.key)){
-      if(e.key==="="||e.key==="Enter") display.value=evaluateExpression(display.value);
-      else display.value+=e.key;
-    } else if(e.key.toLowerCase()==="c") display.value="";
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = (btn as HTMLButtonElement).dataset.value!;
+      if (val === 'C') setOutput('');
+      else if (val === '=') setOutput(evaluateExpression(display.value));
+      else setOutput(display.value + val);
+    });
   });
 
-  linearBtn.addEventListener("click",()=>{
-    const a=parseFloat(prompt("Enter a:")!);
-    const b=parseFloat(prompt("Enter b:")!);
-    display.value=solveLinear(a,b);
+  window.addEventListener('keydown', (e) => {
+    if (/^[\d+\-*/.=]$/.test(e.key)) {
+      if (e.key === '=' || e.key === 'Enter') setOutput(evaluateExpression(display.value));
+      else setOutput(display.value + (e.key === 'Enter' ? '' : e.key));
+    } else if (e.key.toLowerCase() === 'c') { setOutput(''); }
+    else if (e.key === 'Backspace') { setOutput(display.value.slice(0, -1)); }
   });
 
-  quadBtn.addEventListener("click",()=>{
-    const a=parseFloat(prompt("Enter a:")!);
-    const b=parseFloat(prompt("Enter b:")!);
-    const c=parseFloat(prompt("Enter c:")!);
-    display.value=solveQuadratic(a,b,c);
+  linearBtn.addEventListener('click', () => {
+    try {
+      const a = safeParse(prompt('Enter a (ax + b = 0):'));
+      const b = safeParse(prompt('Enter b (ax + b = 0):'));
+      setOutput(solveLinear(a, b));
+    } catch { setOutput('Error'); }
   });
 
-  cubicBtn.addEventListener("click",()=>{
-    const a=parseFloat(prompt("Enter a:")!);
-    const b=parseFloat(prompt("Enter b:")!);
-    const c=parseFloat(prompt("Enter c:")!);
-    const d=parseFloat(prompt("Enter d:")!);
-    display.value=solveCubic(a,b,c,d);
+  quadBtn.addEventListener('click', () => {
+    try {
+      const a = safeParse(prompt('Enter a (ax² + bx + c = 0):'));
+      const b = safeParse(prompt('Enter b (ax² + bx + c = 0):'));
+      const c = safeParse(prompt('Enter c (ax² + bx + c = 0):'));
+      setOutput(solveQuadratic(a, b, c));
+    } catch { setOutput('Error'); }
   });
 
-  rule3Btn.addEventListener("click",()=>{
-    const a=parseFloat(prompt("Enter a:")!);
-    const b=parseFloat(prompt("Enter b:")!);
-    const c=parseFloat(prompt("Enter c:")!);
-    display.value=ruleOfThree(a,b,c).toString();
+  cubicBtn.addEventListener('click', () => {
+    try {
+      const a = safeParse(prompt('Enter a (ax³ + bx² + cx + d = 0):'));
+      const b = safeParse(prompt('Enter b (ax³ + bx² + cx + d = 0):'));
+      const c = safeParse(prompt('Enter c (ax³ + bx² + cx + d = 0):'));
+      const d = safeParse(prompt('Enter d (ax³ + bx² + cx + d = 0):'));
+      setOutput(solveCubic(a, b, c, d));
+    } catch { setOutput('Error'); }
   });
 
-  themeToggle.addEventListener("click",()=>{
-    body.setAttribute("data-theme", body.getAttribute("data-theme")==="light"?"dark":"light");
+  rule3Btn.addEventListener('click', () => {
+    try {
+      const a = safeParse(prompt('Enter a:'));
+      const b = safeParse(prompt('Enter b:'));
+      const c = safeParse(prompt('Enter c:'));
+      setOutput(ruleOfThree(a, b, c).toString());
+    } catch { setOutput('Error'); }
+  });
+
+  themeToggle.addEventListener('click', () => {
+    body.setAttribute('data-theme', body.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
   });
 });
