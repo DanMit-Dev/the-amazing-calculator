@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist/**/*.map
+dist/**/*.js.map
+.DS_Store
+*.log
+.vscode/
