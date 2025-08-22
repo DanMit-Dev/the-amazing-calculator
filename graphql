@@ -1,0 +1,22 @@
+the-amazing-calculator/
+├─ assets/
+│  ├─ icon.png        # REQUIRED: 512x512 png for linux/raw
+│  ├─ icon.icns       # REQUIRED for mac (macOS icon)
+│  └─ icon.ico        # REQUIRED for windows (ico)
+├─ dist/
+│  └─ .gitkeep
+├─ src/
+│  ├─ main.ts
+│  ├─ renderer.ts
+│  └─ math.ts
+├─ .github/
+│  └─ workflows/
+│     └─ release.yml
+├─ .gitignore
+├─ index.html
+├─ package.json
+├─ tsconfig.json
+├─ webpack.config.js
+├─ README.md
+├─ LICENSE.md
+└─ SECURITY.md
