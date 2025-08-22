@@ -1,4 +1,4 @@
-# The Amazing Calculator
+# 🎲The Amazing Calculator
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/DanMit-Dev/the-amazing-calculator)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/DanMit-Dev/the-amazing-calculator/release.yml)
