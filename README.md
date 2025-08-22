@@ -29,7 +29,7 @@ Built with **Electron + TypeScript + Webpack**, featuring:
 - npm >= 9  
 
 ### Clone the Repo
-git clone https://github.com/YOUR_GITHUB_USERNAME/the-amazing-calculator.git
+git clone https://github.com/DanMit-Dev/the-amazing-calculator.git
 cd the-amazing-calculator
 *Install Dependencies*
 npm install
