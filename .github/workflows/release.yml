@@ -1,3 +1,4 @@
+
 name: Build and Publish Release
 
 on:
@@ -7,10 +8,10 @@ on:
 
 jobs:
   build:
-    # Pinning runner versions for stability
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        # Use explicit runner versions for stability
         os: [ubuntu-22.04, windows-2022, macos-14]
 
     steps:
@@ -29,8 +30,9 @@ jobs:
         run: npm run build
 
       - name: Package app
-        # Bash conditionals work only on Linux/macOS runners, so this is fine for current setup
         run: |
+          # This conditional works because Bash is available on Linux/macOS runners;
+          # On Windows, GitHub Actions runs bash for this step too by default.
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             npm run dist:linux
           elif [[ "$RUNNER_OS" == "Windows" ]]; then
