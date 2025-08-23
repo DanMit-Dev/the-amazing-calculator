@@ -1,52 +1,61 @@
-{
-  "name": "the-amazing-calculator",
-  "version": "1.0.1",
-  "description": "The Amazing Calculator — cross-platform desktop app built with Electron + TypeScript.",
-  "main": "dist/main.js",
-  "author": "DanMit",
-  "license": "MIT",
-  "scripts": {
-    "start": "electron .",
-    "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production",
-    "dist:linux": "electron-builder --linux AppImage deb rpm",
-    "dist:win": "electron-builder --win nsis",
-    "dist:mac": "electron-builder --mac dmg",
-    "dist": "electron-builder -mwl"
-  },
-  "build": {
-    "appId": "com.danmit.amazingcalculator",
-    "productName": "The Amazing Calculator",
-    "directories": {
-      "buildResources": "assets",
-      "output": "dist"
-    },
-    "files": [
-      "dist/**/*",
-      "package.json"
-    ],
-    "linux": {
-      "icon": "assets/icon.png",
-      "target": ["AppImage", "deb", "rpm"]
-    },
-    "win": {
-      "icon": "assets/icon.ico",
-      "target": ["nsis"]
-    },
-    "mac": {
-      "icon": "assets/icon.icns",
-      "target": ["dmg"]
-    }
-  },
-  "dependencies": {
-    "electron": "^31.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "electron-builder": "^24.13.3",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.6.2",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
-  }
-}
+name: Build and Publish Release
+
+on:
+  push:
+    tags:
+      - "v1.0.0"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+
+      - name: Package app
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            npm run dist:linux
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            npm run dist:win
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            npm run dist:mac
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }}-installer
+          path: dist/**
+  
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
