@@ -7,10 +7,11 @@ on:
 
 jobs:
   build:
+    # Pinning runner versions for stability
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-22.04, windows-2022, macos-14]
 
     steps:
       - name: Checkout repository
@@ -28,6 +29,7 @@ jobs:
         run: npm run build
 
       - name: Package app
+        # Bash conditionals work only on Linux/macOS runners, so this is fine for current setup
         run: |
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             npm run dist:linux
@@ -45,7 +47,7 @@ jobs:
 
   release:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
