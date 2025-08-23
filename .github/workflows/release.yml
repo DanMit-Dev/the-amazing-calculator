@@ -1,10 +1,10 @@
-
-name: Build and Publish Release
+yame: Build and Publish Release
 
 on:
   push:
     tags:
-      - "v1.0.0"
+      # Use a wildcard to match any semantic version tag, not just v1.0.0
+      - "v*.*.*"
 
 jobs:
   build:
@@ -24,21 +24,24 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci # Prefer npm ci for clean installs in CI environments
 
       - name: Build app
         run: npm run build
 
       - name: Package app
+        shell: bash # Explicitly use bash for all platforms
         run: |
-          # This conditional works because Bash is available on Linux/macOS runners;
-          # On Windows, GitHub Actions runs bash for this step too by default.
+          # Determine package target by runner OS
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             npm run dist:linux
           elif [[ "$RUNNER_OS" == "Windows" ]]; then
             npm run dist:win
           elif [[ "$RUNNER_OS" == "macOS" ]]; then
             npm run dist:mac
+          else
+            echo "Unknown OS: $RUNNER_OS"
+            exit 1
           fi
 
       - name: Upload artifacts
@@ -51,6 +54,9 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -59,6 +65,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./artifacts/**/*
+          files: ./artifacts/**/* # This grabs all files in the artifacts folder
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
