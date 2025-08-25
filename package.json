@@ -18,7 +18,7 @@
   "dependencies": {
     "electron": "^31.0.0",
     "mathjs": "^11.9.0",
-    "electron-updater": "^5.4.0"
+    "electron-updater": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
