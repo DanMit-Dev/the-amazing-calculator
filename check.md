@@ -22,132 +22,13 @@ SECURITY.md
 
 
 
-6) webpack.renderer.config.js
-js
-Copiar
-Editar
-// webpack.renderer.config.js - compile renderer TS and CSS to build/renderer.js
-const path = require('path');
 
-module.exports = {
-  mode: 'production',
-  target: 'electron-renderer',
-  entry: './src/renderer.ts',
-  output: { path: path.resolve(__dirname, 'build'), filename: 'renderer.js' },
-  resolve: { extensions: ['.ts', '.js'] },
-  module: {
-    rules: [
-      { test: /\.ts$/, exclude: /node_modules/, use: 'ts-loader' },
-      { test: /\.css$/i, use: ['style-loader', 'css-loader'] }
-    ]
-  }
-};
-7) .github/workflows/release.yml
-(copy exactly — uses v4 upload/download artifact)
 
-yaml
-Copiar
-Editar
-name: Build and Publish Release
-
-on:
-  push:
-    tags:
-      - "v*.*.*"
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-22.04, windows-2022, macos-14]
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build (main + renderer)
-        run: npm run build
-
-      - name: Package (Linux)
-        if: runner.os == 'Linux'
-        run: npm run dist:linux
-
-      - name: Package (Windows)
-        if: runner.os == 'Windows'
-        run: npm run dist:win
-
-      - name: Package (macOS)
-        if: runner.os == 'macOS'
-        run: npm run dist:mac
-
-      - name: Upload installer artifacts (v4)
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ runner.os }}-installer
-          path: dist/**
-
-  release:
-    needs: build
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: ./artifacts
-
-      - name: Create GitHub Release and upload installers
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ./artifacts/**/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 8) index.html
 html
 Copiar
 Editar
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>The Amazing Calculator</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body data-theme="light">
-  <main style="width:100%;max-width:540px;margin:24px auto;">
-    <input id="display" type="text" readonly />
-    <div class="buttons" id="buttons"></div>
-    <div class="special-buttons">
-      <button id="linear-btn">1º degree</button>
-      <button id="quadratic-btn">2º degree</button>
-      <button id="cubic-btn">3º degree</button>
-      <button id="rule3-btn">Rule of Three</button>
-    </div>
-    <div class="toolbar">
-      <button id="theme-toggle">Toggle Dark/Light</button>
-    </div>
-  </main>
 
-  <script src="build/renderer.js"></script>
-</body>
-</html>
 9) styles.css
 css
 Copiar

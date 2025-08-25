@@ -1,0 +1,70 @@
+name: Build and Publish Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-14]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build (main + renderer)
+        run: npm run build
+
+      - name: Package (Linux)
+        if: runner.os == 'Linux'
+        run: npm run dist:linux
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        run: npm run dist:win
+
+      - name: Package (macOS)
+        if: runner.os == 'macOS'
+        run: npm run dist:mac
+
+      - name: Upload installer artifacts (v4)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-installer
+          path: dist/**
+
+  release:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Create GitHub Release and upload installers
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

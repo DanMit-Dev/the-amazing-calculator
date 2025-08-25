@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Amazing Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+  <main style="width:100%;max-width:540px;margin:24px auto;">
+    <input id="display" type="text" readonly />
+    <div class="buttons" id="buttons"></div>
+    <div class="special-buttons">
+      <button id="linear-btn">1º degree</button>
+      <button id="quadratic-btn">2º degree</button>
+      <button id="cubic-btn">3º degree</button>
+      <button id="rule3-btn">Rule of Three</button>
+    </div>
+    <div class="toolbar">
+      <button id="theme-toggle">Toggle Dark/Light</button>
+    </div>
+  </main>
+
+  <script src="build/renderer.js"></script>
+</body>
+</html>
