@@ -16,68 +16,12 @@ README.md
 LICENSE.md
 SECURITY.md
 
-3) (Optional) package-lock.json placeholder
-If you want to avoid any lockfile complaints or add one via web (not ideal but quiets CI), create this file. Later, when you run npm install on a real machine or Codespace, replace it with the real generated lockfile.
 
-json
-Copiar
-Editar
-{
-  "name": "the-amazing-calculator",
-  "version": "1.0.0",
-  "lockfileVersion": 2,
-  "requires": true,
-  "packages": {
-    "": {
-      "name": "the-amazing-calculator",
-      "version": "1.0.0",
-      "license": "MIT",
-      "dependencies": {
-        "electron": "^31.0.0",
-        "mathjs": "^11.9.0"
-      },
-      "devDependencies": {
-        "electron-builder": "^24.13.3",
-        "typescript": "^5.6.2",
-        "webpack": "^5.94.0"
-      }
-    }
-  }
-}
-Recommendation: This placeholder is acceptable for web-only workflows. Later replace it with a real package-lock.json generated on a machine.
 
-4) tsconfig.json
-json
-Copiar
-Editar
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "strict": true,
-    "outDir": "build",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "rootDir": "src"
-  },
-  "include": ["src/**/*"]
-}
-5) webpack.main.config.js
-js
-Copiar
-Editar
-// webpack.main.config.js - compile Electron main to build/main.js
-const path = require('path');
 
-module.exports = {
-  mode: 'production',
-  target: 'electron-main',
-  entry: './src/main.ts',
-  output: { path: path.resolve(__dirname, 'build'), filename: 'main.js' },
-  resolve: { extensions: ['.ts', '.js'] },
-  module: { rules: [{ test: /\.ts$/, exclude: /node_modules/, use: 'ts-loader' }] }
-};
+
+
+
 6) webpack.renderer.config.js
 js
 Copiar
