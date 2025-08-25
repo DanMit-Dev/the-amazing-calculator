@@ -1,30 +1,25 @@
 {
   "name": "the-amazing-calculator",
   "version": "1.0.0",
-  "description": "The Amazing Calculator — cross-platform offline calculator with advanced solvers.",
-  "main": "build/main.js",
-  "author": "daniel mitsuo / danmit",
-  "license": "MIT",
+  "description": "The best calculator app in the world — cross-platform, offline-first, open-source.",
+  "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "build:main": "webpack --config webpack.main.config.js --mode production",
-    "build:renderer": "webpack --config webpack.renderer.config.js --mode production",
-    "build": "npm run build:main && npm run build:renderer",
+    "build": "webpack --mode production",
     "dist:linux": "electron-builder --linux",
     "dist:win": "electron-builder --win",
-    "dist:mac": "electron-builder --mac",
-    "dist": "electron-builder -mwl"
+    "dist:mac": "electron-builder --mac"
   },
+  "author": "daniel mitsuo / danmit",
+  "license": "MIT",
   "dependencies": {
     "electron": "^31.0.0",
     "mathjs": "^11.9.0",
-    "electron-updater": "^4.6.5"
+    "electron-updater": "^6.1.8"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "css-loader": "^6.10.0",
     "electron-builder": "^24.13.3",
-    "style-loader": "^3.3.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.2",
     "webpack": "^5.94.0",
@@ -33,11 +28,28 @@
   "build": {
     "appId": "com.danmit.theamazingcalculator",
     "productName": "The Amazing Calculator",
-    "directories": { "output": "dist" },
-    "files": ["build/**/*", "index.html", "assets/**"],
-    "publish": [{ "provider": "github", "owner": "DanMit-Dev", "repo": "the-amazing-calculator" }],
-    "linux": { "icon": "assets/icon.png", "target": ["AppImage", "deb"] },
-    "win": { "icon": "assets/icon.ico", "target": ["nsis"] },
-    "mac": { "icon": "assets/icon.icns", "target": ["dmg"] }
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/**/*"
+    ],
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility"
+    },
+    "win": {
+      "target": ["nsis"]
+    },
+    "mac": {
+      "target": ["dmg"]
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "DanMit-Dev",
+        "repo": "the-amazing-calculator"
+      }
+    ]
   }
 }
