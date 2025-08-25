@@ -1,0 +1,11 @@
+:root{--bg:#f3f3f3;--text:#222;--btn:#e0e0e0;--hover:#d0d0d0;--accent:#6c63ff;--accent-hover:#574fd6}
+[data-theme="dark"]{--bg:#1e1e1e;--text:#f3f3f3;--btn:#333;--hover:#444;--accent:#8e83ff;--accent-hover:#6c63ff}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;height:100vh}
+main{width:95%;max-width:540px}
+#display{width:100%;font-size:1.8rem;padding:12px;border-radius:10px;border:1px solid #aaa;background:#fff;text-align:right;box-sizing:border-box;margin-bottom:10px}
+.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+button{padding:12px;font-size:1.05rem;border-radius:10px;border:none;background:var(--btn);cursor:pointer;transition:transform .08s,background .15s}
+button:hover{background:var(--hover)}
+.special-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.special-buttons button{background:var(--accent);color:#fff}
+.toolbar{display:flex;gap:8px;justify-content:flex-end}
