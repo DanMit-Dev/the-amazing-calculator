@@ -15,7 +15,6 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^31.0.0",
-    "mathjs": "^11.9.0",
     "electron-updater": "^6.1.8"
   },
   "devDependencies": {
@@ -44,13 +43,6 @@
     },
     "mac": {
       "target": ["dmg"]
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "DanMit-Dev",
-        "repo": "the-amazing-calculator"
-      }
-    ]
+    }
   }
 }
