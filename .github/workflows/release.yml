@@ -3,11 +3,7 @@ name: Build and Publish Release
 on:
   push:
     tags:
-      - "v*.*.*"
-  workflow_dispatch:
-
-permissions:
-  contents: write
+      - "v*.*.*" # Trigger only on semantic version tags like v1.0.0
 
 jobs:
   build:
@@ -17,34 +13,41 @@ jobs:
         os: [ubuntu-22.04, windows-2022, macos-14]
 
     steps:
+      # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
+      # Install dependencies (uses the package-lock.json we created)
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build (main + renderer)
+      # Build the app (Webpack)
+      - name: Build app
         run: npm run build
 
-      - name: Package (Linux)
-        if: runner.os == 'Linux'
-        run: npm run dist:linux
+      # Package per OS
+      - name: Package app
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            npm run dist:linux
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            npm run dist:win
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            npm run dist:mac
+          else
+            echo "Unknown OS: $RUNNER_OS"
+            exit 1
+          fi
 
-      - name: Package (Windows)
-        if: runner.os == 'Windows'
-        run: npm run dist:win
-
-      - name: Package (macOS)
-        if: runner.os == 'macOS'
-        run: npm run dist:mac
-
-      - name: Upload installer artifacts (v4)
+      # Upload packaged artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-installer
@@ -57,13 +60,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download all artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./artifacts
 
-      - name: Create GitHub Release and upload installers
-        uses: softprops/action-gh-release@v1
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           files: ./artifacts/**/*
         env:
